@@ -1,0 +1,63 @@
+{
+  "slug": "parcel-event-timeline",
+  "gateway": [
+    "timeline",
+    "/tracking",
+    "JavaScript"
+  ],
+  "worker": [
+    "scan-log",
+    "/scans",
+    "Python"
+  ],
+  "cases": [
+    [
+      "Out-of-order and duplicate scans",
+      {
+        "parcel": "SC-204",
+        "scans": [
+          {
+            "id": "c",
+            "at": "2026-11-11T16:45:00Z",
+            "status": "delivered"
+          },
+          {
+            "id": "a",
+            "at": "2026-11-11T08:00:00Z",
+            "status": "accepted"
+          },
+          {
+            "id": "b",
+            "at": "2026-11-11T14:00:00Z",
+            "status": "out_for_delivery"
+          },
+          {
+            "id": "a",
+            "at": "2026-11-11T08:00:00Z",
+            "status": "accepted"
+          }
+        ]
+      },
+      200,
+      {
+        "current": "delivered",
+        "sequence": [
+          "accepted",
+          "out_for_delivery",
+          "delivered"
+        ]
+      }
+    ],
+    [
+      "Replay saved parcel history",
+      {
+        "parcel": "SC-204",
+        "scans": []
+      },
+      200,
+      {
+        "events": 3
+      }
+    ]
+  ]
+}
