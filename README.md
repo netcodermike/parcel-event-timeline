@@ -35,7 +35,7 @@ Scan Log stores immutable parcel events in SQLite. Timeline replays the scans in
 | `timeline` | JavaScript | Public demo API, `POST /tracking` |
 | `scan-log` | Python | Internal service, `POST /scans` |
 
-The two services exchange JSON over HTTP. Each has a `GET /health` endpoint for process readiness. A gateway request returns HTTP 502 when its dependency is unavailable or fails unexpectedly. Invalid input returns HTTP 400. Domain conflicts return HTTP 409 where supported.
+The two services exchange JSON over HTTP. Each has a `GET /health` endpoint for process readiness. Compose starts the API after the internal service passes its readiness probe. A gateway request returns HTTP 502 when its dependency is unavailable or fails unexpectedly. Invalid input returns HTTP 400. Domain conflicts return HTTP 409 where supported.
 
 ## API example
 

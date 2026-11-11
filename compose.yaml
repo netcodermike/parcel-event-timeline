@@ -9,9 +9,15 @@ services:
       OPERATION_PATH: /tracking
       UPSTREAM_URL: http://scan-log:8081/scans
     depends_on:
-      - scan-log
+      scan-log:
+        condition: service_healthy
   scan-log:
     build: ./services/scan-log
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8081/health', timeout=1).close()"]
+      interval: 1s
+      timeout: 2s
+      retries: 20
     environment:
       HOST: 0.0.0.0
       PORT: "8081"
